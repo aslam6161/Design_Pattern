@@ -1,6 +1,7 @@
 ﻿using DesignPattern.AbstractFactory;
 using DesignPattern.FactoryMethod;
 using DesignPattern.FluentInterface;
+using DesignPattern.ObserverPattern;
 using System;
 
 namespace DesignPattern
@@ -59,10 +60,36 @@ namespace DesignPattern
             IComparable<int> val = 12;
 
             GenericClass<Test> genericClass = new GenericClass<Test>();
-            var d=genericClass.genericMethod(new Test() { Id=10});
+            var d = genericClass.genericMethod(new Test() { Id = 10 });
             genericClass.GenericProperty = d;
 
             Console.WriteLine($"{d.Id} {genericClass.GenericProperty.Id}");
+
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------------------------------------------");
+
+
+            #region Observer Pattern
+            Console.WriteLine("Observer Pattern\n");
+            JobPostings jobPostings = new JobPostings();
+
+            JobSeeker Rohan = new JobSeeker("Rohan");
+            JobSeeker Rayhan = new JobSeeker("Rayhan");
+            JobSeeker Raysa = new JobSeeker("Raysa");
+            JobSeeker Diya = new JobSeeker("Diya");
+
+            //Attach
+            jobPostings.Attach(Rohan);
+            jobPostings.Attach(Rayhan);
+            jobPostings.Attach(Raysa);
+            jobPostings.Attach(Diya);
+
+            //Detach
+            jobPostings.Detach(Raysa);
+            jobPostings.AddJob(new Job("Software Developer at Internetnow Technologi bhd hdn"));
+            Console.ReadKey();
+
+            #endregion
 
         }
     }
@@ -76,7 +103,7 @@ namespace DesignPattern
         }
     }
 
-    public class GenericClass<T> where T: new()
+    public class GenericClass<T> where T : new()
     {
         private T genericField;
 
